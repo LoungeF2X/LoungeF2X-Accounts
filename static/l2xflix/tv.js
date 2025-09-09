@@ -1,4 +1,3 @@
-
 const apiKey = '00119ffd2d069c15532a335d74664364';
 const tvGrid = document.getElementById('tv-grid');
 const searchInput = document.getElementById('search-input');
