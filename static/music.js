@@ -1,4 +1,4 @@
-const YT_KEY = process.env.YT_KEY;
+const YT_KEY = AIzaSyCIjc7ZxQ9ePbQ8ikjKshXH6ffakxJC_0o;
 const SEARCH_EP = "https://itunes.apple.com/search?term=";
 const searchInput = document.querySelector("#searchInput");
 const searchResults = document.querySelector("#searchResults");
