@@ -1,6 +1,6 @@
 // Add your Firebase config here
 const firebaseConfig = {
-  apiKey: "AIzaSyBddL00mb8gHPJH__nIdADfBhqPiFtOLCE",
+  apiKey: process.env.API_KEY,
   authDomain: "loungef2x.firebaseapp.com",
   projectId: "loungef2x",
   storageBucket: "loungef2x.appspot.com",
