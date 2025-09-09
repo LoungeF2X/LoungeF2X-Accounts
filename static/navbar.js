@@ -1,15 +1,3 @@
-// Add your Firebase config here
-const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: "loungef2x.firebaseapp.com",
-  projectId: "loungef2x",
-  storageBucket: "loungef2x.appspot.com",
-  messagingSenderId: "38074061356",
-  appId: "1:38074061356:web:5b8386cd6109504bdbf789",
-  measurementId: "G-K0XFKT6PDT"
-};
-
-// Initialize Firebase if not already initialized
 if (typeof firebase !== "undefined" && firebase.apps && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
   console.log("Firebase initialized in navbar.js");
