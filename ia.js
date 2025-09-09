@@ -2,7 +2,7 @@ const chatContainer = document.getElementById('chat-container');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 
-const apiKey = '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';
+const apiKey = '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';
 
 // 🧠 Memory to store full convo
 const chatHistory = [
