@@ -278,6 +278,7 @@ function insertNavbar() {
         <a href="/static/index.html"><span>Home</span></a>
         <a href="/static/g.html"><span>Games</span></a>
         <a href="/static/l2xflix/index.html"><span>L2X-Flix</span></a>
+        <a href="/static/music.html"><span>Music</span></a>
         <a href="/tabs.html"><span>Browser</span></a>
         <a href="/ia.html"><span>AI</span></a>
         <a href="/static/settings.html"><span>Settings</span></a>
