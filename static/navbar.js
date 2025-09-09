@@ -1,3 +1,12 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyBddL00mb8gHPJH__nIdADfBhqPiFtOLCE",
+  authDomain: "loungef2x.firebaseapp.com",
+  projectId: "loungef2x",
+  storageBucket: "loungef2x.firebasestorage.app",
+  messagingSenderId: "38074061356",
+  appId: "1:38074061356:web:5b8386cd6109504bdbf789",
+  measurementId: "G-K0XFKT6PDT"
+};
 if (typeof firebase !== "undefined" && firebase.apps && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
   console.log("Firebase initialized in navbar.js");
