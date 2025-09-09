@@ -305,7 +305,7 @@ function addTab(url) {
     newTab.onclick = () => selectTab(newTab);
     tabsContainer.insertBefore(newTab, document.querySelector('.add-tab-button'));
     if (!url) {
-        url = "https://google.com"
+        url = "https://duckduckgo.com"
     }
     iframe.classList.add('tab-iframe');
     iframe.id = `iframe-${tabCount}`;
@@ -375,7 +375,7 @@ function addTab(url) {
     }
 
     // Use the function to decide
-    const url = detectURL(input, "https://www.google.com/search?q=%s");
+    const url = detectURL(input, "https://duckduckgo.com/search?q=%s");
 
     // Redirect to appropriate iframe source
     activeIframe.src = url.startsWith("http") ? `/static/embed.html#${url}` : url;
