@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <meta name="google-adsense-account" content="ca-pub-8655131518824482">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>     
+    <script src="/static/rightclick.js"></script>
+    <script src="/static/navbar.js"></script>
+    <script src="/static/tabcloaker.js"></script>
+    <script>Help1();</script>
+    <script>Help();</script>
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <!-- Firebase Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <!-- Firebase Storage -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+  <style>
+    h1 {
+      text-align: center;
+      margin-top: 32px;
+      letter-spacing: 2px;
+      font-size: 2.5rem;
+      color: #ff3c3c;
+      text-shadow: 0 2px 16px #000a;
+    }
+    #dashboard {
+      max-width: 420px;
+      margin: 40px auto 0 auto;
+      background: rgba(30, 0, 0, 0.97);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(255, 0, 0, 0.15);
+      padding: 32px 28px 24px 28px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,60,60,0.13);
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .dashboard-section {
+      margin: 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,60,60,0.09);
+    }
+    .dashboard-label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #ff3c3c;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 8px #0007;
+    }
+    .dashboard-value {
+      margin-left: 8px;
+      font-size: 1.05rem;
+      color: #fff;
+      word-break: break-all;
+      text-shadow: 0 1px 8px #0007;
+    }
+    .dashboard-btn {
+      margin-left: 16px;
+      background: linear-gradient(90deg, #ff3c3c 0%, #1a1a1a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #ff3c3c22;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .dashboard-btn:hover {
+      background: linear-gradient(90deg, #1a1a1a 0%, #ff3c3c 100%);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px #ff3c3c44;
+    }
+    #logout-btn {
+      display: block;
+      margin: 32px auto 0 auto;
+      background: #1a1a1a;
+      color: #ff3c3c;
+      border: 1px solid #ff3c3c;
+      border-radius: 6px;
+      padding: 8px 28px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #ff3c3c22;
+      font-weight: 600;
+    }
+    #logout-btn:hover {
+      background: #ff3c3c;
+      color: #1a1a1a;
+      box-shadow: 0 4px 16px #ff3c3c44;
+    }
+    #auth-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7);
+      justify-content: center; align-items: center;
+      animation: fadeIn 0.3s;
+    }
+    #auth-modal .modal-content {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 28px 24px 18px 24px;
+      border-radius: 12px;
+      min-width: 320px;
+      position: relative;
+      box-shadow: 0 4px 24px #ff3c3c33;
+      animation: fadeIn 0.4s;
+      border: 1.5px solid #ff3c3c44;
+    }
+    #auth-modal input {
+      display: block;
+      margin: 10px 0 18px 0;
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 5px;
+      border: 1px solid #ff3c3c;
+      background: #2a0000;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 6px #ff3c3c22;
+    }
+    #auth-modal input:focus {
+      border: 1.5px solid #fff;
+      box-shadow: 0 2px 12px #ff3c3c44;
+    }
+    #auth-modal button {
+      margin-top: 12px;
+      background: linear-gradient(90deg, #ff3c3c 0%, #1a1a1a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 22px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #ff3c3c22;
+      font-weight: 500;
+    }
+    #auth-modal button:hover {
+      background: linear-gradient(90deg, #1a1a1a 0%, #ff3c3c 100%);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px #ff3c3c44;
+    }
+    #auth-modal .error {
+      color: #ff3c3c;
+      margin-top: 8px;
+      font-size: 0.97rem;
+    }
+    #auth-modal .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 1.5rem;
+      color: #ff3c3c;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      z-index: 10;
+    }
+    #auth-modal .close-modal:hover {
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      #dashboard { padding: 18px 4vw; }
+      #auth-modal .modal-content { min-width: 90vw; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to your Dashboard</h1>
+  <div id="account-status"></div>
+  <div id="dashboard"></div>
+  <input type="file" id="pfp-upload" accept="image/*" style="display:none;">
+  <center><button id="logout-btn" style="display:none; ">Logout</button></center>
+
+  <!-- Modal for Auth and Actions -->
+  <div id="auth-modal">
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <script>
+    // Your Firebase config (replace with your actual config)
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+
+    // Track modal stack for navigation
+    let modalStack = [];
+
+    function showModal(html, options = {}) {
+      document.getElementById('modal-content').innerHTML = `
+        <button class="close-modal" id="close-modal-btn" title="Close">&times;</button>
+        ${html}
+      `;
+      document.getElementById('auth-modal').style.display = 'flex';
+
+      if (options.preventClickOff) {
+        document.getElementById('auth-modal').onclick = null;
+      } else {
+        document.getElementById('auth-modal').onclick = function(e) {
+          if (e.target === this) hideModal();
+        };
+      }
+
+      document.getElementById('close-modal-btn').onclick = function() {
+        if (options.backOnClose) {
+          window.history.back();
+        } else {
+          hideModal();
+        }
+      };
+    }
+
+    function hideModal() {
+      document.getElementById('auth-modal').style.display = 'none';
+      modalStack = [];
+    }
+
+    async function checkAccount() {
+      const accountId = localStorage.getItem("account");
+      const statusDiv = document.getElementById("account-status");
+      const logoutBtn = document.getElementById("logout-btn");
+      const dashboardDiv = document.getElementById("dashboard");
+
+      if (!accountId) {
+        showSignup();
+        return;
+      }
+      try {
+        const docRef = db.collection("accounts").doc(accountId);
+        const docSnap = await docRef.get();
+        if (docSnap.exists) {
+ 
+          logoutBtn.style.display = "inline-block";
+          const accountData = docSnap.data();
+          const user = auth.currentUser;
+          renderDashboard(accountData, user, accountId);
+        } else {
+          showLogin();
+        }
+      } catch (e) {
+        showLogin();
+      }
+    }
+
+    // Helper to get profile image URL or fallback
+    function getProfileImageUrl(accountData) {
+      // Try localStorage first, then fallback to Firestore, then default
+      return localStorage.getItem("profileImageDataUrl") ||
+             accountData.profileImageUrl ||
+             "/static/images/profile-icon.jfif";
+    }
+
+    // After successful login/signup, fetch and use the profile image from Firestore
+    async function updateNavbarPfp(accountData) {
+      // Try to find the navbar icon and update its src
+      const navbarImg = document.querySelector('.navbar .left-section img, .navbar .right-section img[alt="Profile"]');
+      if (navbarImg && accountData.profileImageDataUrl) {
+        navbarImg.src = accountData.profileImageDataUrl;
+      }
+    }
+
+    // When rendering the dashboard, also update the navbar icon
+    function renderDashboard(accountData, user, accountId) {
+      const dashboardDiv = document.getElementById("dashboard");
+      dashboardDiv.innerHTML = `
+        <div class="dashboard-section" style="flex-direction:column;align-items:center;border-bottom:none;">
+          <div style="position:relative;display:inline-block;">
+            <img id="profile-pic" src="${getProfileImageUrl(accountData)}" alt="Profile Picture" style="width:96px;height:96px;border-radius:50%;border:3px solid #ff3c3c;box-shadow:0 2px 12px #ff3c3c44;cursor:pointer;object-fit:cover;">
+            <span style="position:absolute;bottom:0;right:0;background:#ff3c3c;border-radius:50%;padding:6px;">
+              <svg width="20" height="20" fill="#fff" viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zm-2 0H5V5h14zm-7-3a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+            </span>
+          </div>
+          <div style="margin-top:10px;font-size:0.95rem;color:#aaa;">Click your profile picture to upload a new one</div>
+        </div>
+        <div class="dashboard-section">
+          <span class="dashboard-label">Email:</span>
+          <span class="dashboard-value" id="user-email">${user ? user.email : accountData.email}</span>
+          <button class="dashboard-btn" id="change-email-btn">Change Email</button>
+        </div>
+        <div class="dashboard-section">
+          <span class="dashboard-label">Password:</span>
+          <span class="dashboard-value">********</span>
+          <button class="dashboard-btn" id="change-password-btn">Change Password</button>
+        </div>
+        <div class="dashboard-section">
+          <span class="dashboard-label">Premium:</span>
+          <span class="dashboard-value" id="premium-status">${accountData.Premium ? "Yes" : "No"}</span>
+          ${accountData.Premium ? "" : `<button class="dashboard-btn" id="get-premium-btn">Get Premium</button>`}
+        </div>
+      `;
+
+      // Profile picture upload logic
+      document.getElementById("profile-pic").src = accountData.profileImageDataUrl || "/static/images/profile-icon.jfif";
+      updateNavbarPfp(accountData);
+      document.getElementById("profile-pic").onclick = function() {
+        document.getElementById("pfp-upload").click();
+      };
+      document.getElementById("pfp-upload").onchange = function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async function(evt) {
+          const dataUrl = evt.target.result;
+          // Save to Firestore
+          await db.collection("accounts").doc(accountId).update({ profileImageDataUrl: dataUrl });
+          // Update UI
+          document.getElementById("profile-pic").src = dataUrl;
+          updateNavbarPfp({ profileImageDataUrl: dataUrl });
+          alert("Profile picture updated!");
+        };
+        reader.readAsDataURL(file);
+        e.target.value = "";
+      };
+
+      document.getElementById("change-email-btn").onclick = function() {
+        showChangeEmail(user);
+      };
+
+      document.getElementById("change-password-btn").onclick = function() {
+        showChangePassword(user);
+      };
+
+      if (!accountData.Premium) {
+        document.getElementById("get-premium-btn").onclick = function() {
+          window.location.href = "/static/dash/premium.html";
+        };
+      }
+    }
+
+    function showChangeEmail(user) {
+      showModal(`
+        <h2>Change Email</h2>
+        <form id="change-email-form">
+          <input type="email" id="new-email" placeholder="New Email" required>
+          <input type="password" id="current-password" placeholder="Current Password" required>
+          <button type="submit">Update Email</button>
+          <div class="error" id="change-email-error"></div>
+        </form>
+      `);
+      document.getElementById("change-email-form").onsubmit = async function(e) {
+        e.preventDefault();
+        const newEmail = document.getElementById("new-email").value;
+        const currentPassword = document.getElementById("current-password").value;
+        const errorDiv = document.getElementById("change-email-error");
+        errorDiv.textContent = "";
+        try {
+          // Re-authenticate
+          const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+          await user.reauthenticateWithCredential(cred);
+          await user.updateEmail(newEmail);
+
+          // Update in Firestore
+          const accountId = localStorage.getItem("account");
+          await db.collection("accounts").doc(accountId).update({ email: newEmail });
+
+          hideModal();
+          alert("Email updated!");
+          checkAccount();
+        } catch (err) {
+          errorDiv.textContent = err.message;
+        }
+      };
+    }
+
+    function showChangePassword(user) {
+      showModal(`
+        <h2>Change Password</h2>
+        <form id="change-password-form">
+          <input type="password" id="old-password" placeholder="Current Password" required>
+          <input type="password" id="new-password" placeholder="New Password" required>
+          <input type="password" id="new-password2" placeholder="Repeat New Password" required>
+          <button type="submit">Update Password</button>
+          <div class="error" id="change-password-error"></div>
+        </form>
+      `);
+      document.getElementById("change-password-form").onsubmit = async function(e) {
+        e.preventDefault();
+        const oldPassword = document.getElementById("old-password").value;
+        const newPassword = document.getElementById("new-password").value;
+        const newPassword2 = document.getElementById("new-password2").value;
+        const errorDiv = document.getElementById("change-password-error");
+        errorDiv.textContent = "";
+        if (newPassword !== newPassword2) {
+          errorDiv.textContent = "New passwords do not match.";
+          return;
+        }
+        try {
+          // Re-authenticate
+          const cred = firebase.auth.EmailAuthProvider.credential(user.email, oldPassword);
+          await user.reauthenticateWithCredential(cred);
+          await user.updatePassword(newPassword);
+          hideModal();
+          alert("Password updated!");
+        } catch (err) {
+          errorDiv.textContent = err.message;
+        }
+      };
+    }
+
+    function showSignup() {
+      showModal(`
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+          <input type="email" id="signup-email" placeholder="Email" required>
+          <input type="password" id="signup-password" placeholder="Password" required>
+          <input type="password" id="signup-password2" placeholder="Repeat Password" required>
+          <button type="submit">Sign Up</button>
+          <div class="error" id="signup-error"></div>
+          <p>Already have an account? <a href="#" id="to-login">Log in</a></p>
+        </form>
+      `, { preventClickOff: true, backOnClose: true });
+      document.getElementById('to-login').onclick = (e) => {
+        e.preventDefault();
+        showLogin();
+      };
+      document.getElementById('signup-form').onsubmit = async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value;
+        const pass1 = document.getElementById('signup-password').value;
+        const pass2 = document.getElementById('signup-password2').value;
+        const errorDiv = document.getElementById('signup-error');
+        errorDiv.textContent = '';
+        if (pass1 !== pass2) {
+          errorDiv.textContent = "Passwords do not match.";
+          return;
+        }
+        try {
+          const userCred = await auth.createUserWithEmailAndPassword(email, pass1);
+          const docRef = await db.collection("accounts").add({
+            email: email,
+            Premium: false,
+            uid: userCred.user.uid
+          });
+          localStorage.setItem("account", docRef.id);
+          hideModal();
+          checkAccount();
+        } catch (err) {
+          errorDiv.textContent = err.message;
+        }
+      };
+    }
+
+    function showLogin() {
+      showModal(`
+        <h2>Log In</h2>
+        <form id="login-form">
+          <input type="email" id="login-email" placeholder="Email" required>
+          <input type="password" id="login-password" placeholder="Password" required>
+          <button type="submit">Log In</button>
+          <div class="error" id="login-error"></div>
+          <p>Don't have an account? <a href="#" id="to-signup">Sign up</a></p>
+        </form>
+      `, { preventClickOff: true, backOnClose: true });
+      document.getElementById('to-signup').onclick = (e) => {
+        e.preventDefault();
+        showSignup();
+      };
+      document.getElementById('login-form').onsubmit = async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const errorDiv = document.getElementById('login-error');
+        errorDiv.textContent = '';
+        try {
+          const userCred = await auth.signInWithEmailAndPassword(email, password);
+          const query = await db.collection("accounts").where("email", "==", email).get();
+          if (!query.empty) {
+            const doc = query.docs[0];
+            localStorage.setItem("account", doc.id);
+            hideModal();
+            checkAccount();
+          } else {
+            errorDiv.textContent = "Account not found in database.";
+          }
+        } catch (err) {
+          errorDiv.textContent = err.message;
+        }
+      };
+    }
+
+    document.getElementById("logout-btn").onclick = function() {
+      localStorage.removeItem("account");
+      auth.signOut();
+      location.reload();
+    };
+
+    // Wait for Firebase Auth to initialize before checking account
+    auth.onAuthStateChanged(() => {
+      modalStack = [];
+      checkAccount();
+    });
+  </script>
+</body>
+</html>

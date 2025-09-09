@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Get Premium - LoungeF2X</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a0000 100%);
+      color: #f5f5f5;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .premium-container {
+      max-width: 420px;
+      margin: 60px auto 0 auto;
+      background: rgba(30, 0, 0, 0.97);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(255, 0, 0, 0.15);
+      padding: 38px 32px 32px 32px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,60,60,0.13);
+      animation: fadeIn 0.7s;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    h1 {
+      color: #ff3c3c;
+      margin-bottom: 18px;
+      font-size: 2.2rem;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 16px #000a;
+    }
+    .premium-info {
+      font-size: 1.13rem;
+      margin-bottom: 32px;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .cashapp-section {
+      background: #2a0000;
+      border-radius: 10px;
+      padding: 22px 10px;
+      margin: 0 auto 18px auto;
+      border: 1.5px solid #ff3c3c44;
+      box-shadow: 0 2px 12px #ff3c3c22;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cashapp-label {
+      color: #ff3c3c;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .cashapp-tag {
+      font-size: 1.3rem;
+      color: #fff;
+      background: #ff3c3c;
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px #ff3c3c44;
+      user-select: all;
+      display: inline-block;
+    }
+    .copy-btn {
+      margin-top: 8px;
+      background: linear-gradient(90deg, #ff3c3c 0%, #1a1a1a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #ff3c3c22;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .copy-btn:hover {
+      background: linear-gradient(90deg, #1a1a1a 0%, #ff3c3c 100%);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px #ff3c3c44;
+    }
+    .note {
+      color: #ffb3b3;
+      font-size: 0.98rem;
+      margin-top: 18px;
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) {
+      .premium-container { padding: 18px 4vw; }
+      .cashapp-section { max-width: 95vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="premium-container">
+    <h1>Get Premium</h1>
+    <div class="premium-info">
+      Unlock all features and support LoungeF2X by upgrading to Premium!<br>
+      To purchase, send payment to the Cash App tag below and contact support with your account email.
+    </div>
+    <div class="cashapp-section">
+      <div class="cashapp-label">Send to my Cash App:</div>
+      <div class="cashapp-tag" id="cashapp-tag">$LISPlays</div>
+      <button class="copy-btn" onclick="copyCashApp()">Copy Tag</button>
+    </div>
+    <div class="note">
+      After payment, email proof and your account email to <b>support@purpleutilities.xyz</b> for activation.<br>
+      Thank you for supporting LoungeF2X!
+    </div>
+    <div class="note"> If you would like to know more forms of payment, email to <b>support@purpleutilities.xyz</b></div>
+  </div>
+  <script>
+    function copyCashApp() {
+      const tag = document.getElementById('cashapp-tag').innerText;
+      navigator.clipboard.writeText(tag).then(() => {
+        alert('Cash App tag copied!');
+      });
+    }
+  </script>
+</body>
+</html>

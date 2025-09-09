@@ -1,10 +1,40 @@
+// Add your Firebase config here
+const firebaseConfig = {
+  apiKey: "AIzaSyBddL00mb8gHPJH__nIdADfBhqPiFtOLCE",
+  authDomain: "loungef2x.firebaseapp.com",
+  projectId: "loungef2x",
+  storageBucket: "loungef2x.appspot.com",
+  messagingSenderId: "38074061356",
+  appId: "1:38074061356:web:5b8386cd6109504bdbf789",
+  measurementId: "G-K0XFKT6PDT"
+};
+
+// Initialize Firebase if not already initialized
+if (typeof firebase !== "undefined" && firebase.apps && !firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+  console.log("Firebase initialized in navbar.js");
+}
+
+// Load Firebase App and Firestore if not already loaded
+if (typeof firebase === "undefined") {
+  const script1 = document.createElement('script');
+  script1.src = "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js";
+  document.head.appendChild(script1);
+
+  const script2 = document.createElement('script');
+  script2.src = "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js";
+  document.head.appendChild(script2);
+}
+
 // Function to create and insert the navbar
 function insertNavbar() {
   // Define the HTML for the navbar
   const navbarHTML = `
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JC8E4VJGL9"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -20,16 +50,6 @@ function insertNavbar() {
     </ul>
   </div>
   <style type="text/css">
-  #particles-js {
-    position: fixed;  /* Keeps it full-screen even when scrolling */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    z-index: -1;  /* Ensures it stays behind everything */
-}
-
 #main {
     position: relative;  /* Ensures content appears above the particles */
     z-index: 1;  /* Moves content in front of particles */
@@ -96,131 +116,172 @@ function insertNavbar() {
       #main {
       margin: 100px;
       }
-.navbar {
-    position: fixed;  /* Keeps it stuck at the top */
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 70px;
-    background-color: #333;
-    display: flex;  /* Uses flexbox for better alignment */
-    align-items: center;
-    justify-content: space-between; /* Ensures left & right sections stay apart */
-    padding: 0 16px;
-    z-index: 10000000000000000;
-}
+  .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 210px;
+      height: 100vh;
+      background-color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 0 0;
+      z-index: 10000000000000000;
+      border-right: 2px solid #ff3c3c;
+  }
 
-.navbar .left-section {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between logo & text */
-}
+  .navbar .left-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      margin-bottom: 30px;
+  }
 
-.navbar .right-section {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between buttons */
-}
+  .navbar .right-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding-left: 0;
+  }
 
   .right-section a {
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: background 0.3s;
-    cursor: pointer;
-}
-.navbar .left-section a {
-  font-size: 16px;
-    color: red;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: background 0.3s;
-}
-.right-section a:hover {
-    background-color: red;
-}
+      width: 100%;
+      font-size: 16px;
+      color: white;
+      text-align: left;
+      padding: 14px 24px;
+      text-decoration: none;
+      transition: background 0.3s;
+      cursor: pointer;
+      border-radius: 0 20px 20px 0;
+      margin: 0;
+      box-sizing: border-box;
+  }
+  .navbar .left-section a {
+      color: red;
+      padding: 0;
+      text-align: center;
+      background: none;
+  }
+  .right-section a:hover {
+      background-color: #ff3c3c;
+      color: #fff;
+  }
 
-.navbar img {
-    width: 40px;  /* Resize logo */
-    height: auto;  /* Keep aspect ratio */
-    object-fit: contain;
-}
+  .navbar img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin-bottom: 6px;
+  }
 
-.navbar p {
-    font-size: 20px;
-    color: red;
-}
+  .navbar p {
+      font-size: 22px;
+      color: #ff3c3c;
+      margin: 0;
+      font-weight: bold;
+      letter-spacing: 1px;
+  }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-    float: right;
-}
+  .dropdown {
+      width: 100%;
+      position: relative;
+      display: block;
+  }
 
-.dropdown .dropbtn {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: inherit;
-    cursor: pointer;
-}
+  .dropdown .dropbtn {
+      width: 100%;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 24px;
+      background-color: inherit;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: left;
+      border-radius: 0 20px 20px 0;
+  }
 
-.right-section a:hover,
-.dropdown:hover .dropbtn {
-    background-color: red;
-}
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;  /* Ensures it appears below the navbar */
-    left: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1000;  /* Ensures it stays above other content */
-}
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+  }
 
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: flex;  /* Enables flexbox */
-    justify-content: center;  /* Centers text horizontally */
-    align-items: center;  /* Centers text vertically */
-    text-align: center;  /* Ensures text stays centered */
-    height: 40px;  /* Adjust height to control vertical centering */
-}
+  .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 40px;
+  }
 
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
+  .dropdown-content a:hover {
+      background-color: #ddd;
+  }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+  .dropdown:hover .dropdown-content {
+      display: block;
+  }
 
+  @media (max-width: 700px) {
+      .navbar {
+          width: 60px;
+      }
+      .navbar .left-section p,
+      .right-section a span,
+      .dropdown .dropbtn span {
+          display: none;
+      }
+      .right-section a,
+      .dropdown .dropbtn {
+          padding: 14px 10px;
+      }
+      .navbar img {
+          width: 32px;
+          height: 32px;
+      }
+  }
+  body {
+      margin-left: 210px !important;
+  }
+  @media (max-width: 700px) {
+      body {
+          margin-left: 60px !important;
+      }
+  }
   </style>
-
   <div class="navbar">
       <div class="left-section">
-    <a href="/"><img src="/static/images/l2x.png"></a>
-    <a href="/"><p>LoungeF2X</p></a>
-    </div>
-    <div class="right-section">
-    <a href="/static/index.html">Home</a>
-    <a href="/static/g.html">Games</a>
-    <a href="/static/l2xflix/index.html">L2X-Flix</a>
-    <a href="/tabs.html">Browser</a>
-    <a href="/ia.html">AI</a>        
-    <a href="/static/settings.html">Settings</a>
-</div>
+        <a href="/static/dash">
+          <img class="pfp" src="/static/images/profile-icon.jfif" alt="Profile" style="width:48px;height:48px;border-radius:50%;vertical-align:middle;">
+        </a>
+        <a href="/static/"><p>LoungeF2X</p></a>
+      </div>
+      <div class="right-section">
+        <a href="/static/index.html"><span>Home</span></a>
+        <a href="/static/g.html"><span>Games</span></a>
+        <a href="/static/l2xflix/index.html"><span>L2X-Flix</span></a>
+        <a href="/tabs.html"><span>Browser</span></a>
+        <a href="/ia.html"><span>AI</span></a>
+        <a href="/static/settings.html"><span>Settings</span></a>
+      </div>
   </div>
 
   <script>
@@ -243,6 +304,10 @@ function insertNavbar() {
         console.error("Fullscreen API is not supported on this browser.");
       }
     }
+
+    if (window.updateNavbarPfp) {
+  window.updateNavbarPfp(accountData);
+}
       </script>
   `;
   const navbarDiv = document.createElement('div');
@@ -251,10 +316,77 @@ function insertNavbar() {
   // Insert the navbar at the top of the body
   const body = document.body;
   body.insertBefore(navbarDiv, body.firstChild);
+}
 
+// Function to update the navbar profile icon with the user's PFP
+function updateNavbarPfp(accountData) {
+  const navbarImg = document.querySelector('.navbar .left-section img.pfp');
+  if (!navbarImg) {
+    console.error("Navbar profile image element not found.");
+    return;
+  }
+  if (accountData && accountData.profileImageDataUrl) {
+    navbarImg.src = accountData.profileImageDataUrl;
+    console.log("Navbar profile icon updated with user PFP:", accountData.profileImageDataUrl.slice(0, 50) + "...");
+  } else {
+    navbarImg.src = "/static/images/profile-icon.jfif";
+    console.log("Navbar profile icon set to default.");
+  }
+}
+
+window.updateNavbarPfp = updateNavbarPfp;
+
+async function autoUpdateNavbarPfp() {
+  // Wait until firebase and firestore are loaded
+  function waitForFirebase() {
+    return new Promise(resolve => {
+      function check() {
+        if (typeof firebase !== "undefined" && firebase.firestore) {
+          resolve();
+        } else {
+          setTimeout(check, 100);
+        }
+      }
+      check();
+    });
+  }
+
+  await waitForFirebase();
+
+  // Initialize Firebase if not already initialized
+  if (typeof firebase !== "undefined" && firebase.apps && !firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    console.log("Firebase initialized in navbar.js (autoUpdateNavbarPfp)");
+  }
+
+  if (!localStorage.getItem("account")) {
+    console.error("No account found in localStorage.");
+    updateNavbarPfp({});
+    return;
+  }
+
+  try {
+    if (!window._navbarDb) {
+      window._navbarDb = firebase.firestore();
+      console.log("Firestore initialized in navbar.");
+    }
+    const db = window._navbarDb;
+    const accountId = localStorage.getItem("account");
+    const doc = await db.collection("accounts").doc(accountId).get();
+    if (doc.exists) {
+      console.log("Account data loaded from Firestore:", doc.data());
+      window.updateNavbarPfp(doc.data());
+    } else {
+      console.error("Account document not found in Firestore.");
+      window.updateNavbarPfp({});
+    }
+  } catch (e) {
+    console.error("Error fetching account data from Firestore:", e);
+    window.updateNavbarPfp({});
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    insertNavbar();  // Insert navbar after DOM is ready
+  insertNavbar();
+  autoUpdateNavbarPfp();
 });
-

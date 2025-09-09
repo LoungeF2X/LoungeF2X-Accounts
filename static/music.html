@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinel - Music</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/music.css" />
+</head>
+<body>
+  <main class="main-content">
+    <section class="music-section">
+      <h1 class="page-title">Music Player</h1>
+
+      <div class="music-search-container">
+        <input type="text" class="music-search-input" placeholder="Search for any song..." id="searchInput"/>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+
+      <div class="music-main-container">
+        <div class="player">
+          <div class="album-art">
+            <i class="fa-solid fa-music" id="musicIcon"></i>
+            <img src="" alt="Album" id="albumCover" crossorigin="anonymous" style="display: none;"/>
+          </div>
+          <div class="info" id="playerInfo">
+
+            <div class="track-title" id="trackTitle">Not Playing</div>
+            <div class="artist" id="artistName"></div>
+            <div class="controls">
+              <div class="control-row">
+                <i id="backward10" class="fas fa-backward control-btn"></i>
+                <i id="backward5" class="fa-solid fa-chevron-left control-btn"></i>
+                <i id="playPause" class="fa-solid fa-play control-btn"></i>
+                <i id="forward5" class="fa-solid fa-chevron-right control-btn"></i>
+                <i id="forward10" class="fas fa-forward control-btn"></i>
+              </div>
+              <div class="control-row">
+                <i id="loopToggle" class="fa-solid fa-repeat control-btn"></i>
+                <i id="volumeBtn" class="fa-solid fa-volume-high control-btn"></i>
+                <i id="favoriteBtn" class="fa-regular fa-heart control-btn"></i>
+                <i id="lyrics-toggle" class="fa-solid fa-align-left"></i>
+
+              </div>
+            </div>
+            <div id="seekbar" class="seekbar"><div id="progress"></div></div>
+            <div class="timecodes">
+              <span id="currentTime">0:00</span>
+              <span id="remainingTime">-0:00</span>
+            </div>
+          </div>
+          <div class="lyrics-info" id="lyricsInfo">
+            <div class="lyrics-content" id="lyricsContent"></div>
+          </div>
+        </div>
+
+        <div class="favorites-column" id="favoritesColumn">
+          <div class="favorites-title">Favorites</div>
+          <div class="play-favorites-btn" id="playFavoritesBtn"><i class="fas fa-play"></i> Play Favorites</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+ <div id="player-container">
+    <div id="ytPlayer"></div>
+  </div>
+
+  <center><footer class="footer">
+    <div class="footer-content">
+      <div class="footer-credits">
+        Music Player Code Borrowed from <a href="https://petezahgames.com" target="_blank" rel="noopener noreferrer">PeteZah</a>
+      </div>
+    </div>
+  </footer></center>
+
+  <script crossorigin="anonymous" src="//unpkg.com/same-runtime/dist/index.global.js"></script>
+  <script type="module" src="/static/music.js"></script>
+</body>
+</html>
