@@ -14,13 +14,9 @@
     <script src="/static/tabcloaker.js"></script>
     <script>Help1();</script>
     <script>Help();</script>
-  <!-- Firebase App (the core Firebase SDK) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <!-- Firebase Auth -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <!-- Firebase Firestore -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <!-- Firebase Storage -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
   <style>
     h1 {
@@ -194,22 +190,15 @@
   <div id="dashboard"></div>
   <input type="file" id="pfp-upload" accept="image/*" style="display:none;">
   <center><button id="logout-btn" style="display:none; ">Logout</button></center>
-
-  <!-- Modal for Auth and Actions -->
   <div id="auth-modal">
     <div class="modal-content" id="modal-content"></div>
   </div>
-
   <script>
-    // Your Firebase config (replace with your actual config)
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
     const storage = firebase.storage();
-
-    // Track modal stack for navigation
     let modalStack = [];
-
     function showModal(html, options = {}) {
       document.getElementById('modal-content').innerHTML = `
         <button class="close-modal" id="close-modal-btn" title="Close">&times;</button>
@@ -266,24 +255,19 @@
       }
     }
 
-    // Helper to get profile image URL or fallback
     function getProfileImageUrl(accountData) {
-      // Try localStorage first, then fallback to Firestore, then default
       return localStorage.getItem("profileImageDataUrl") ||
              accountData.profileImageUrl ||
              "/static/images/profile-icon.jfif";
     }
 
-    // After successful login/signup, fetch and use the profile image from Firestore
     async function updateNavbarPfp(accountData) {
-      // Try to find the navbar icon and update its src
       const navbarImg = document.querySelector('.navbar .left-section img, .navbar .right-section img[alt="Profile"]');
       if (navbarImg && accountData.profileImageDataUrl) {
         navbarImg.src = accountData.profileImageDataUrl;
       }
     }
 
-    // When rendering the dashboard, also update the navbar icon
     function renderDashboard(accountData, user, accountId) {
       const dashboardDiv = document.getElementById("dashboard");
       dashboardDiv.innerHTML = `
@@ -313,7 +297,6 @@
         </div>
       `;
 
-      // Profile picture upload logic
       document.getElementById("profile-pic").src = accountData.profileImageDataUrl || "/static/images/profile-icon.jfif";
       updateNavbarPfp(accountData);
       document.getElementById("profile-pic").onclick = function() {
@@ -325,9 +308,7 @@
         const reader = new FileReader();
         reader.onload = async function(evt) {
           const dataUrl = evt.target.result;
-          // Save to Firestore
           await db.collection("accounts").doc(accountId).update({ profileImageDataUrl: dataUrl });
-          // Update UI
           document.getElementById("profile-pic").src = dataUrl;
           updateNavbarPfp({ profileImageDataUrl: dataUrl });
           alert("Profile picture updated!");
@@ -368,12 +349,10 @@
         const errorDiv = document.getElementById("change-email-error");
         errorDiv.textContent = "";
         try {
-          // Re-authenticate
           const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
           await user.reauthenticateWithCredential(cred);
           await user.updateEmail(newEmail);
 
-          // Update in Firestore
           const accountId = localStorage.getItem("account");
           await db.collection("accounts").doc(accountId).update({ email: newEmail });
 
@@ -409,7 +388,6 @@
           return;
         }
         try {
-          // Re-authenticate
           const cred = firebase.auth.EmailAuthProvider.credential(user.email, oldPassword);
           await user.reauthenticateWithCredential(cred);
           await user.updatePassword(newPassword);
