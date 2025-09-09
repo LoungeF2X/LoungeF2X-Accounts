@@ -341,7 +341,6 @@
           <button type="submit">Update Email</button>
           <div class="error" id="change-email-error"></div>
         </form>
-        <h3>If you forgot your password please email support@purpleutilities.xyz to reset it.</h3>
       `);
       document.getElementById("change-email-form").onsubmit = async function(e) {
         e.preventDefault();
@@ -453,6 +452,7 @@
           <div class="error" id="login-error"></div>
           <p>Don't have an account? <a href="#" id="to-signup">Sign up</a></p>
         </form>
+        <h3>If you forgot your password please email support@purpleutilities.xyz to reset it.</h3>
       `, { preventClickOff: true, backOnClose: true });
       document.getElementById('to-signup').onclick = (e) => {
         e.preventDefault();
