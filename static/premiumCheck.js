@@ -1,10 +1,7 @@
-// premiumCheck.js
-// Requires Firebase CDN scripts and firebase.js to be loaded first
-
 window.premiumCheck = async function({
-  onPremium, // function to call if user is premium
-  onNotPremium, // function to call if user is not premium
-  onError // function to call if error (optional)
+  onPremium, 
+  onNotPremium, 
+  onError
 } = {}) {
   try {
     const accountId = localStorage.getItem("account");
