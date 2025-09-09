@@ -85,7 +85,7 @@ function displaySeasons(seasons) {
     seasonList.classList.add('season-list');
     seasons.forEach(season => {
         const seasonItem = document.createElement('li');
-        seasonItem.textContent = `Season ${season.season_number}`;
+        seasonItem.textContent = `Season ${season.season_number - 1}`;
         seasonItem.addEventListener('click', async () => {
             const episodes = await fetchEpisodes(currentTVId, season.season_number);
             displayEpisodes(episodes);
